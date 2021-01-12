@@ -6,7 +6,7 @@ export default function notification(message: string, theme: string) {
   dismissAll();
 
   toast[theme](message, {
-    position: "top-center",
+    position: "top-right",
     autoClose: 2500,
     hideProgressBar: false,
     closeOnClick: true,

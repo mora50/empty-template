@@ -1,6 +1,5 @@
 import axios from "axios";
 import ICustomAxiosRequestConfig from "../lib/getProductsList";
-import { clearToken, getToken } from "../utils/auth";
 import notification from "../utils/notification";
 import Cookies from "js-cookie";
 import Router from "next/router";

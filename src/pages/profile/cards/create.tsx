@@ -30,6 +30,8 @@ export default function CreateCard() {
     data.date_expiration = data.date_expiration.replace("/", "");
     data.number = normalizeChar(data.number);
 
+    
+
     setLoading(true);
     try {
       await api.post("/customer/cards/create", data);

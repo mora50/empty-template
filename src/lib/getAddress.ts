@@ -34,6 +34,7 @@ export default async function getAddress(id: string) {
     if (response) {
       response.country_code = response.phone.substring(0, 3);
       response.phone = response.phone.substring(3);
+      
     }
 
     return response;

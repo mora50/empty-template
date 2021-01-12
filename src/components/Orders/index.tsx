@@ -62,7 +62,7 @@ const Orders: FC = () => {
           <div className="grid grid-cols-6 justify-center gap-5 ">
             {orders?.map((order) => (
               <WrapperOrder
-                className="lg:col-span-6 md:col-span-3 col-span-full"
+                className=" md:col-span-12 col-span-full"
                 key={order.id}
                 statusColor={order.status}
               >
