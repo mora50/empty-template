@@ -3,14 +3,10 @@ import { FC, useRef } from "react";
 import { useOverlay, useModal, OverlayContainer } from "@react-aria/overlays";
 import { useDialog } from "react-aria";
 import Link from "next/link";
-import { UserCircle } from "@styled-icons/boxicons-solid/UserCircle";
-
 import { FocusScope } from "@react-aria/focus";
-import { Container } from "../../styles/components";
 import BackdropModal from "../BackdropModal";
 import { FacebookSquare } from "@styled-icons/boxicons-logos/FacebookSquare";
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
-import { PersonCircle } from "@styled-icons/bootstrap/PersonCircle";
 
 // css
 import * as S from "./styles";

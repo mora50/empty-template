@@ -20,6 +20,7 @@ interface ICustomer {
   phone: string;
   first_name: string;
   last_name: string;
+  fullname: string;
 }
 
 function Customer() {
@@ -74,7 +75,7 @@ function Customer() {
 
     (async function () {
       try {
-        const { data: response } = await api.get("/customer/get");
+        const { data: response } = await api.get<ICustomer>("/customer/get");
 
         if (response) {
           const { first_name, last_name, date_of_birth } = response;
