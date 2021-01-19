@@ -11,6 +11,7 @@ const initialState = {
   displayLocationBar: false,
   displaySideBar: false,
   displayAccessDropdown: false,
+  displayCartBar: false,
   displayDropDownUser: "LOGIN_VIEW",
 };
 
@@ -27,6 +28,10 @@ type Action =
       type: "OPEN_SIDE_BAR";
     }
   | { type: "CLOSE_SIDE_BAR" }
+  | {
+      type: "OPEN_CART_BAR";
+    }
+  | { type: "CLOSE_CART_BAR" }
   | {
       type: "OPEN_ACESS_DROPDOWN";
     }
@@ -64,6 +69,17 @@ function uiReducer(state: State, action: Action) {
         displaySideBar: false,
       };
 
+    case "OPEN_CART_BAR":
+      return {
+        ...state,
+        displayCartBar: true,
+      };
+    case "CLOSE_CART_BAR":
+      return {
+        ...state,
+        displayCartBar: false,
+      };
+
     case "OPEN_ACESS_DROPDOWN":
       return {
         ...state,
@@ -89,6 +105,10 @@ export const UIProvider: FC = (props) => {
   const openLocationBar = () => dispatch({ type: "OPEN_LOCATION_BAR" });
 
   const closeLocationBar = () => dispatch({ type: "CLOSE_LOCATION_BAR" });
+
+  const openCartBar = () => dispatch({ type: "OPEN_CART_BAR" });
+
+  const closeCartBar = () => dispatch({ type: "CLOSE_CART_BAR" });
 
   const openAccessDropdown = () => dispatch({ type: "OPEN_ACESS_DROPDOWN" });
 
@@ -117,6 +137,8 @@ export const UIProvider: FC = (props) => {
       openAccessDropdown,
       closeAccessDropdown,
       toggleLocationBar,
+      openCartBar,
+      closeCartBar,
     }),
     [state]
   );

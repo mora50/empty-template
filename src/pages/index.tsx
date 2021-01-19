@@ -39,18 +39,6 @@ export default function Home({ products }) {
   return (
     <>
       <Container className="lg:mb-4 mt-7">
-        <div className="flex flex-col mb-5">
-          {/*   <O.BarWrapper className="mt-5">
-            <O.Bar width={barWidth()} />
-          </O.BarWrapper>
-
-          <div className="flex justify-between w-4/5 -mt-1.5">
-            {Array.from(Array(5), (_, i) => (
-              <O.PointStatus key={i} />
-            ))}
-          </div> */}
-        </div>
-
         <Slider {...settings}>
           <div className="h-64">
             <img

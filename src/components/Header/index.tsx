@@ -10,6 +10,7 @@ import { Container } from "../../styles/components";
 import { useUI } from "../../contexts/modalsContext";
 import { FC } from "react";
 import SideBar from "../SideBar";
+import CartBox from "@components/CartBox";
 
 const Header: FC = () => {
   const {
@@ -22,6 +23,9 @@ const Header: FC = () => {
     displayAccessDropdown,
     closeAccessDropdown,
     openAccessDropdown,
+    displayCartBar,
+    openCartBar,
+    closeCartBar,
   } = useUI();
   function handleSearch(e) {
     e.preventDefault();
@@ -58,7 +62,7 @@ const Header: FC = () => {
                 <MapMarkerAlt />
               </S.MapIcon>
 
-              <button>
+              <button onClick={openCartBar}>
                 <S.iconCart /* onClick={handleCartMenu} */ />
               </button>
 
@@ -80,6 +84,8 @@ const Header: FC = () => {
         </Container>
       </S.menuWrapper>
       <SideBar open={displaySideBar} onClose={closeSideBar} />
+
+      <CartBox open={displayCartBar} onClose={closeCartBar} />
 
       <UserDropDown
         open={displayAccessDropdown}

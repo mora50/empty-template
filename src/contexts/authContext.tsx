@@ -17,9 +17,19 @@ declare global {
 export const AuthContext = createContext<State | any>({});
 
 export const AuthProvider: FC = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [authenticated, setAuthenticated] = useState<boolean>(null);
+
+  const token = Cookies.get("token");
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (token) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }, [token]);
 
   const login = async (email: string, password: string, redirect?: string) => {
     try {
@@ -44,7 +54,7 @@ export const AuthProvider: FC = ({ children }) => {
 
         router.push(redirect);
 
-        setUser(true);
+        setAuthenticated(true);
       }
     } finally {
       return false;
@@ -52,7 +62,7 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
+    setAuthenticated(false);
     router.push("/login");
     Cookies.remove("token");
 
@@ -60,7 +70,9 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated: authenticated, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -69,9 +81,9 @@ export const AuthProvider: FC = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 
 const ProtectRoute: FC<{ children?: JSX.Element }> = ({ children }) => {
-  const token = Cookies.get("token");
-
   const { isAuthenticated } = useAuth();
+
+  const token = Cookies.get("token");
 
   const router = useRouter();
 
