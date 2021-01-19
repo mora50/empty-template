@@ -45,7 +45,10 @@ body, html, #__next{
   width: 100%;
 
   overflow-x: hidden;
-  font: 400 16px Roboto, sans-serif;
+
+  color: #3e3e3e;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body{
@@ -62,6 +65,7 @@ body{
   --primary: #FA4224;
   --secondary: #475F94;
   --green: #08dd5e;
+  --light-green: #40cd28;
   --red: #ED2929;
   --f-blue: #3b5999;
   --link-hover-color: ${() => darken(0.15, "#FA4224")};
@@ -107,7 +111,7 @@ margin-right: auto;
 left: 0;
 right: 0;
 text-align: center;
-}
+  }
 
 
 `;

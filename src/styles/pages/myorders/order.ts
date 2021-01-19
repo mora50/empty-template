@@ -9,7 +9,7 @@ export const BarWrapper = styled.div`
   align-items: center;
 `;
 
-export const Bar = styled.div`
+export const Bar = styled.div<{ width: string }>`
   height: 3px;
   background: #000;
   width: ${({ width }) => width}%;

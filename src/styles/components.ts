@@ -9,6 +9,7 @@ interface ICallActions {
   bgColor?: string;
   minHeight?: number;
   fontSize?: number;
+  flexCenter?: boolean;
 }
 
 const size = {
@@ -155,6 +156,14 @@ export const Button = styled.button<ICallActions>`
     width: 30px;
     margin-right: 7px;
   }
+
+  ${(props) =>
+    props.flexCenter &&
+    css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `};
 
   ${(props) =>
     props.minHeight &&

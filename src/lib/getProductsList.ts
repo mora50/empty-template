@@ -6,10 +6,28 @@ export default interface ICustomAxiosRequestConfig extends AxiosRequestConfig {
   serverSide: boolean;
 }
 
+interface IProducts {
+  son_offers: [
+    {
+      price: number;
+    }
+  ];
+
+  images: [
+    {
+      url: string;
+    }
+  ];
+  image: string;
+  url_key: string;
+}
+
 export async function getProductsList() {
   const data = {
     term: "",
-    facets: { featured: "No" },
+    facets: {
+      featured: "No",
+    },
   };
 
   try {
@@ -17,21 +35,19 @@ export async function getProductsList() {
       serverSide: true,
     } as ICustomAxiosRequestConfig);
 
-    const reducedProductList = response.data.hits.slice(0, 15);
+    const reducedProductList: IProducts[] = response.data.hits.slice(0, 15);
 
-    const productsList = reducedProductList.map((product: any) => {
+    const productsList = reducedProductList.map((product, index) => {
       const price =
         product.son_offers &&
         product.son_offers.length &&
-        product.son_offers.sort(
-          (prev: any, curr: any) => prev.price - curr.price
-        )[0].price;
-
-      product.image = product.images[0].url;
+        product.son_offers.sort((prev, curr) => prev.price - curr.price)[0]
+          .price;
 
       return {
         ...product,
-        price: price ? currencyFormat(price) : null,
+        son_suggested_price: price ? currencyFormat(price) : null,
+        price: price ? price : null,
       };
     });
 
@@ -39,4 +55,12 @@ export async function getProductsList() {
   } catch (err) {
     return err;
   }
+}
+
+export async function getProductsUrl() {
+  let productsList = await getProductsList();
+
+  return productsList.map(({ son_url_key }) => ({
+    params: { slug: son_url_key },
+  }));
 }

@@ -13,6 +13,6 @@ export default function notification(message: string, theme: string) {
     pauseOnHover: false,
     draggable: true,
     progress: undefined,
-    toastId: "notification",
+    /* toastId: "notification", */
   });
 }

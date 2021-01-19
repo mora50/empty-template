@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC } from "react";
 import Slider from "react-slick";
 import ProductBox from "../ProductBox";
@@ -10,6 +11,13 @@ interface IProducts {
       name: string;
       image: string;
       price: string;
+      son_suggested_price: string;
+      son_url_key: string;
+      son_images: [
+        {
+          url: string;
+        }
+      ];
     }
   ];
 }
@@ -68,13 +76,15 @@ const ProductsCarousel: FC<IProducts> = ({ products }) => {
     <S.SliderWrapper className="mb-10  container   m-auto">
       <Slider {...settingsSlider}>
         {products.map((product) => (
-          <div key={product.id}>
-            <ProductBox
-              image={product.image}
-              price={product.price}
-              name={product.name}
-            />
-          </div>
+          <Link href={`/product/${product.son_url_key}`} key={product.id}>
+            <a>
+              <ProductBox
+                image={product.image ?? product.son_images[0].url}
+                price={product.son_suggested_price}
+                name={product.name}
+              />
+            </a>
+          </Link>
         ))}
       </Slider>
     </S.SliderWrapper>

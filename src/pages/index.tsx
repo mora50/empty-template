@@ -7,8 +7,6 @@ import { GetStaticProps } from "next";
 import { getProductsList } from "../lib/getProductsList";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-import { useEffect } from "react";
-import Switch from "@components/UI/Switch";
 import { Container } from "@styles/components";
 import * as O from "@styles/pages/myorders/order";
 
@@ -35,39 +33,6 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const barWidth = (status) => {
-  status = "completed";
-
-  switch (status) {
-    case "pending_payment":
-      return 0;
-
-    case "awaiting_confirmation":
-      return 25;
-
-    case "processing":
-      return 25;
-
-    case "awaiting_confirmation":
-      return 25;
-
-    case "billed":
-      return 50;
-
-    case "awaiting_withdrawal":
-      return 75;
-
-    case "tracking":
-      return 75;
-
-    case "completed":
-      return 100;
-
-    default:
-      return 0;
-  }
-};
-
 export default function Home({ products }) {
   const router = useRouter();
 
@@ -75,7 +40,7 @@ export default function Home({ products }) {
     <>
       <Container className="lg:mb-4 mt-7">
         <div className="flex flex-col mb-5">
-          <O.BarWrapper className="mt-5">
+          {/*   <O.BarWrapper className="mt-5">
             <O.Bar width={barWidth()} />
           </O.BarWrapper>
 
@@ -83,7 +48,7 @@ export default function Home({ products }) {
             {Array.from(Array(5), (_, i) => (
               <O.PointStatus key={i} />
             ))}
-          </div>
+          </div> */}
         </div>
 
         <Slider {...settings}>

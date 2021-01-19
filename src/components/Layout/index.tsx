@@ -9,7 +9,7 @@ const Layout: React.FC = ({ children }) => {
       <WrapperContent>
         <Header />
 
-        <div className="my-6 md:my-10">{children}</div>
+        <div className="py-6 md:py-10">{children}</div>
         <Footer />
       </WrapperContent>
     </ManagedUIContext>
