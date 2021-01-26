@@ -94,10 +94,10 @@ function Addresses(): JSX.Element {
           </div>
         )}
 
-        <div className="grid gap-4 grid-cols-12">
+        <div className="grid md:gap-10 gap-y-10 grid-cols-12">
           {addresses?.map((address) => (
             <S.AddressBox
-              className="md:col-span-6 col-span-full"
+              className="md:col-span-6 col-span-full shadow-md"
               key={address.id}
             >
               <div className="grid grid-cols-12 justify-between">

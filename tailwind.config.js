@@ -11,7 +11,11 @@ module.exports = {
     ],
   },
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        top: "0px -5px 15px 0px rgba(0,0,0,0.27)",
+      },
+    },
   },
   variants: {},
   plugins: [],

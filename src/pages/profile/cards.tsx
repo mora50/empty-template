@@ -52,7 +52,11 @@ export default function Cards() {
       {loading && <LoadingAllScreen />}
 
       <div className="grid grid-cols-12 justify-center gap-5">
-        {!cards.length && !loading && "Sem cartões cadastrados"}
+        {!cards.length && !loading && (
+          <div className="text-center font-bold text-lg col-span-full">
+            Nenhum cartão cadastrado
+          </div>
+        )}
 
         {cards?.map((card) => (
           <div

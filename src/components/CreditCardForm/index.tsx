@@ -1,7 +1,7 @@
 import CreditCard from "@components/CreditCard";
-import Input from "@components/Input";
+import InputMask from "@components/InputMask";
 import { Alert, Button } from "@styles/components";
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import { useFormContext } from "react-hook-form";
 import { Elements } from "./styles";
@@ -60,7 +60,7 @@ export default function CreditCardForm() {
               Número do cartão<span>*</span>
             </div>
 
-            <Input
+            <InputMask
               ref={register}
               mask="9999 9999 9999 9999"
               name="number"
@@ -83,7 +83,7 @@ export default function CreditCardForm() {
                 Validade<span>*</span>
               </div>
 
-              <Input
+              <InputMask
                 ref={register}
                 autoComplete="off"
                 name="date_expiration"
@@ -94,7 +94,9 @@ export default function CreditCardForm() {
                 maxLength={5}
                 onFocus={handleInputFocus}
                 id="date_expiration"
-                onChange={(e) => setExpiry(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setExpiry(e.target.value)
+                }
               />
 
               {errors?.date_expiration && (
@@ -109,7 +111,7 @@ export default function CreditCardForm() {
                 CVV<span>*</span>
               </div>
 
-              <Input
+              <InputMask
                 mask="9999"
                 ref={register}
                 inputMode="numeric"
@@ -117,7 +119,9 @@ export default function CreditCardForm() {
                 id="cvv"
                 name="cvv"
                 placeholder="CVV"
-                onChange={(e) => setCvc(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setCvc(e.target.value)
+                }
                 onFocus={handleInputFocus}
               />
 

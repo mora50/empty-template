@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import api from "../services/api";
+import notification from "@utils/notification";
 
 export interface State {
   isAutheticated: boolean;
@@ -12,6 +13,12 @@ declare global {
   interface Date {
     addHours: Function;
   }
+}
+
+interface Logout {
+  data: {
+    message: string;
+  };
 }
 
 export const AuthContext = createContext<State | any>({});
@@ -61,12 +68,18 @@ export const AuthProvider: FC = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setAuthenticated(false);
-    router.push("/login");
-    Cookies.remove("token");
+  const logout = async () => {
+    try {
+      const response: Logout = await api.get("/customer/logout");
 
-    delete api.defaults.headers.Authorization;
+      setAuthenticated(false);
+      router.push("/login");
+      Cookies.remove("token");
+
+      notification(response.data.message, "success");
+      delete api.defaults.headers.Authorization;
+    } finally {
+    }
   };
 
   return (

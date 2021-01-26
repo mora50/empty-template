@@ -43,10 +43,7 @@ export default class MyDocument extends Document {
       <Html lang="pt">
         <Head>
           <meta charSet="utf-8" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-            rel="stylesheet"
-          />
+
           <link
             rel="icon"
             href="https://pt-br.reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791"

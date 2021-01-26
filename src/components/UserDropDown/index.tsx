@@ -11,6 +11,7 @@ import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
 // css
 import * as S from "./styles";
 import { useUI } from "../../contexts/modalsContext";
+import { Container } from "@styles/components";
 
 interface Props {
   open?: boolean;
@@ -58,18 +59,23 @@ const UserDropDown: FC<Props> = ({ open = false, onClose }) => {
                   enter="transition ease-in-out duration-300 transform"
                   leave="transition ease-in-out duration-100 transform"
                 >
-                  <div className="container mx-auto px-4">
+                  <Container>
                     <S.DropDownAccess>
                       <S.CartHeaderWrapper>
                         <button onClick={onClose}>
                           <CloseOutline className="close" />
                         </button>
                         {displayDropDownUser === "LOGIN_VIEW" && (
-                          <div className="px-4 py-4 mt-4">
+                          <div className="px-4 pt-2 pb-3">
                             <div className="login-btn">
                               <div onClick={onClose}>
                                 <Link href="/login">
-                                  <a className="btn-login">Entrar</a>
+                                  <a
+                                    className="btn-login block w-100"
+                                    onClick={onClose}
+                                  >
+                                    Entrar
+                                  </a>
                                 </Link>
                               </div>
 
@@ -89,11 +95,12 @@ const UserDropDown: FC<Props> = ({ open = false, onClose }) => {
                             </div>
 
                             <div className="mt-4 text-center new-customer">
-                              <span className="color-grey">
-                                {" "}
-                                Cliente novo?{" "}
-                              </span>
-                              <strong> cadastrar</strong>
+                              <span className="color-grey">Cliente novo? </span>
+                              <Link href="/register">
+                                <a onClick={onClose}>
+                                  <b> cadastrar</b>
+                                </a>
+                              </Link>
                             </div>
                           </div>
                         )}
@@ -127,7 +134,7 @@ const UserDropDown: FC<Props> = ({ open = false, onClose }) => {
                         )}
                       </S.CartHeaderWrapper>
                     </S.DropDownAccess>
-                  </div>
+                  </Container>
                 </Transition.Child>
               </section>
             </div>

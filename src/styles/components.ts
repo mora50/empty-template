@@ -74,13 +74,37 @@ export const LoadingSpinner = styled.div<ILoadingSpinner>`
   }
 `;
 
+export const Input = styled.input<{ error?: boolean }>`
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  width: 100%;
+  border-radius: 7px;
+  background: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  -webkit-box-shadow: 2px 0px 10px 2px rgba(0, 0, 0, 0.02);
+  -moz-box-shadow: 2px 0px 10px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: 2px 0px 10px 2px rgba(0, 0, 0, 0.02);
+  transition: 0.4s;
+
+  &:focus {
+    border-color: var(--primary);
+  }
+  ${({ error }) =>
+    error &&
+    css`
+      border-color: #ff0000;
+    `}
+`;
+
 export const FormStyled = styled.form<{ disabled?: boolean }>`
   /*   label {
     padding-bottom: 1rem;
   } */
   transition: 0.3s;
 
-  input,
   select,
   textarea {
     padding: 10px 15px;
@@ -118,32 +142,19 @@ export const FormStyled = styled.form<{ disabled?: boolean }>`
       pointer-events: none;
       opacity: 0.6;
     `};
-
-  /* input,
-  select,
-  text {
-    border-radius: ${(props) => props.theme.borders.borderRadius};
-    color: #000;
-    -webkit-appearance: none;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    padding: 0.7rem 1rem;
-    width: 100%;
-    margin: 0.5rem 0 0.7rem 0;
-  } */
 `;
 
 export const Alert = styled.div`
-  border: 1px solid #e02424;
-  padding: 4px 0.7rem;
   border-radius: 7px;
-  background-color: #fbd5d5;
+  color: red;
 `;
+
+export const arrowLeftCarousel = styled.div``;
 
 export const Button = styled.button<ICallActions>`
   border-radius: 10px;
   align-items: center;
-  padding: 4px 0.7rem;
+  padding: 7px 0.7rem;
   color: #fff;
   transition: 0.2s;
   min-height: 35px;
@@ -187,7 +198,7 @@ export const Button = styled.button<ICallActions>`
 export const LinkStyled = styled.a<ICallActions>`
   border-radius: 10px;
   align-items: center;
-  padding: 4px 0.7rem;
+  padding: 7px 0.7rem;
   color: #fff;
   transition: 0.2s;
 

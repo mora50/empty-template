@@ -34,7 +34,8 @@ export const Box = styled.label<{ active: boolean }>`
   position: relative;
   margin-bottom: 0;
   vertical-align: top;
-  display: inline-block;
+  display: flex;
+  align-items: center;
 
   &:before {
     content: "";
@@ -49,7 +50,6 @@ export const Box = styled.label<{ active: boolean }>`
   &:after {
     content: "";
     position: absolute;
-    top: -2.5px;
     display: block;
     background: #f1f1f1;
     width: 15px;

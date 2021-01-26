@@ -5,8 +5,6 @@ import { useOverlay, useModal, OverlayContainer } from "@react-aria/overlays";
 import { useDialog } from "@react-aria/dialog";
 import { FocusScope } from "@react-aria/focus";
 import { MapMarkerAlt } from "@styled-icons/fa-solid/MapMarkerAlt";
-import { getGeolocation } from "../../lib/geoLocation";
-import InputMask from "react-input-mask";
 
 import Logo from "../../assets/images/logo.svg";
 // css
@@ -15,6 +13,8 @@ import { LoadingSpinner } from "../../styles/components";
 import notification from "../../utils/notification";
 import api from "../../services/api";
 import BackdropModal from "../BackdropModal";
+import InputMask from "@components/InputMask";
+import { useLocation } from "src/contexts/locationContext";
 
 interface Props {
   className?: string;
@@ -27,12 +27,9 @@ interface LocationProps {
   city: string;
 }
 
-type Falsy = false | 0 | "" | null | undefined;
-
 const Location: FC<Props> = ({ open = false, onClose }) => {
-  const [location, setLocation] = useState<LocationProps | Falsy>();
+  /* const [location, setLocation] = useState<LocationProps | Falsy>(); */
   const [postcode, setPostcode] = useState<string>();
-  const [loading, setLoading] = useState<Boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const { modalProps } = useModal();
   const { overlayProps } = useOverlay(
@@ -45,46 +42,21 @@ const Location: FC<Props> = ({ open = false, onClose }) => {
   );
   const { dialogProps } = useDialog({}, ref);
 
-  useEffect(() => {
-    setLocation(JSON.parse(localStorage.getItem("location")));
-  }, []);
+  const {
+    getLocationByGeo,
+    getLocationByCode,
+    removeLocationHandler,
+    location,
+    loading,
+  } = useLocation();
 
-  async function searchCepHandler(e: any) {
-    e.preventDefault();
-    if (postcode.length < 9) {
-      return;
-    }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    const data = {
-      zipcode: postcode.replace("-", ""),
-    };
+    console.log(event.target[0].value);
 
-    setLoading(true);
-
-    try {
-      const { data: response } = await api.post("/search-cep", data);
-
-      if (response.message) {
-        return notification("Cep não encontrado", "error");
-      }
-
-      localStorage.setItem("location", JSON.stringify(response.data));
-
-      setLocation(response.data);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleGeoLocation() {
-    await getGeolocation(setLocation, setLoading);
-  }
-
-  function removeLocationHandler() {
-    setLocation(false);
-
-    localStorage.removeItem("location");
-  }
+    getLocationByCode(event.target[0].value);
+  };
 
   return (
     <Transition show={open}>
@@ -137,25 +109,28 @@ const Location: FC<Props> = ({ open = false, onClose }) => {
                         <>
                           <button
                             type="button"
-                            onClick={() => handleGeoLocation()}
+                            onClick={() => getLocationByGeo()}
                           >
                             <MapMarkerAlt /> usar minha localização atual
                           </button>
 
                           <div className="mt-4">ou digite seu CEP abaixo</div>
 
-                          <S.CepLocation>
-                            <InputMask
+                          <S.CepLocation
+                            onSubmit={(e) => {
+                              handleSubmit(e);
+                            }}
+                          >
+                            {/*  <InputMask
                               type="text"
-                              mask="99999-999"
+                              mask="9999"
                               placeholder="00000-000"
                               inputMode="numeric"
                               onChange={(e) => setPostcode(e.target.value)}
-                            />
-                            <button
-                              onClick={(e) => searchCepHandler(e)}
-                              type="submit"
-                            >
+                            /> */}
+
+                            <input type="text" name="code" />
+                            <button type="submit">
                               <S.iconGo />
                             </button>
                           </S.CepLocation>

@@ -12,9 +12,12 @@ import ProtectRoute, { AuthProvider } from "../contexts/authContext";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-credit-cards/es/styles-compiled.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { ToastContainer } from "react-toastify";
 import client from "@services/apollo";
+import { LocationProvider } from "src/contexts/locationContext";
 
 const Noop: FC = ({ children }) => <>{children}</>;
 
@@ -30,13 +33,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <GlobalStyle />
           <ToastContainer />
           <AuthProvider>
-            <ProtectRoute>
-              <Layout pageProps={pageProps}>
-                <SideBarProfile>
-                  <Component {...pageProps} />
-                </SideBarProfile>
-              </Layout>
-            </ProtectRoute>
+            <LocationProvider>
+              <ProtectRoute>
+                <Layout pageProps={pageProps}>
+                  <SideBarProfile>
+                    <Component {...pageProps} />
+                  </SideBarProfile>
+                </Layout>
+              </ProtectRoute>
+            </LocationProvider>
           </AuthProvider>
         </ThemeProvider>
       </ApolloProvider>

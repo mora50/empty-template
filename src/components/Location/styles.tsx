@@ -44,7 +44,7 @@ export const Close = styled.button`
   top: 0.4rem;
 `;
 
-export const LocationWrapper = styled.form`
+export const LocationWrapper = styled.div`
   position: relative;
   border-radius: 0px 0px 20px 20px;
   justify-content: center;
@@ -56,7 +56,7 @@ export const LocationWrapper = styled.form`
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.15);
   background-color: #fff;
   z-index: 101;
-  padding: 20px 15px;
+  padding: 30px 15px 20px;
   text-align: center;
 
   div button:nth-child(1) {

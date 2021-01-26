@@ -32,9 +32,6 @@ export const CartHeaderWrapper = styled.div`
 
   a,
   button {
-    width: 100%;
-    display: block;
-
     &:hover {
       color: var(--primary);
     }
@@ -61,6 +58,11 @@ export const CartHeaderWrapper = styled.div`
     margin: 0.5rem 0;
 
     button,
+    a {
+      height: 31px;
+    }
+
+    button,
     a:hover {
       color: #fff !important;
     }
@@ -74,7 +76,7 @@ export const CartHeaderWrapper = styled.div`
       background: var(--link-hover-color);
     }
 
-    padding: 8px 12px;
+    padding: 6px 12px;
     font-size: 13px;
 
     color: #fff;

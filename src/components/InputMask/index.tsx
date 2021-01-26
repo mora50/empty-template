@@ -1,3 +1,4 @@
+import { Input } from "@styles/components";
 import {
   FormEvent,
   forwardRef,
@@ -12,9 +13,10 @@ import { mask, unMask } from "remask";
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   mask: string | string[];
   defaultValue?: string;
+  error?: boolean;
 }
 
-const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
+const InputMask = forwardRef<HTMLInputElement, IInput>((props, ref) => {
   const [value, setValue] = useState<string>();
 
   const { defaultValue, onChange } = props;
@@ -42,7 +44,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
   }, [defaultValue]);
 
   return (
-    <input
+    <Input
       {...props}
       defaultValue={value}
       ref={ref}
@@ -54,4 +56,4 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
   );
 });
 
-export default Input;
+export default InputMask;

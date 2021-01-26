@@ -7,7 +7,7 @@ export const ListItems = styled.div`
   background: #fff;
   right: 1.5rem;
   padding: 15px;
-  bottom: 7.3rem;
+  bottom: 11.3rem;
   z-index: 20;
 
   .active {
@@ -76,7 +76,7 @@ export const ButtonMenu = styled.button`
   border-radius: 100%;
   background: var(--primary);
   right: 1.5rem;
-  bottom: 3rem;
+  bottom: 7rem;
   z-index: 20;
 
   div {

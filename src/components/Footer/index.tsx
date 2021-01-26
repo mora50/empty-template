@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 // images
@@ -10,8 +11,14 @@ import * as S from "./styles";
 function Footer() {
   const [menu, setMenu] = useState("");
 
+  const router = useRouter();
+
+  console.log(router);
+
+  const isProductPage = router.pathname.includes("product");
+
   return (
-    <S.footerWrapper>
+    <S.footerWrapper className={isProductPage && "pb-44 md:pb-0"}>
       <div className="container mx-auto px-4 pt-3">
         <div className="flex flex-wrap justify-center items-center">
           <div>

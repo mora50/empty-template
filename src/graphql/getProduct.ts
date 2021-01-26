@@ -8,6 +8,7 @@ export const GET_PRODUCT = gql`
       description
       easy_test_url
       sku
+      short_description
 
       images {
         path

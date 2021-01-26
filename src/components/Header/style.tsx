@@ -60,17 +60,17 @@ export const iconMap = styled(MapMarkerAlt)`
 `;
 
 export const menuWrapper = styled.header`
-  position: fixed;
   left: 0;
   top: 0;
 
   width: 100%;
   background-color: #fff;
   border-bottom: 0px solid #ccc;
-  padding: 5px 0px;
+  padding: 5px 5px 10px 5px;
   -webkit-box-shadow: 0px 1px 21px 1px rgba(0, 0, 0, 0.03);
   -moz-box-shadow: 0px 1px 21px 1px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 1px 21px 1px rgba(0, 0, 0, 0.03);
+  z-index: 100;
 
   @media ${device.laptop} {
     padding-bottom: 1rem;
@@ -134,7 +134,6 @@ export const searchWrapper = styled.form`
 export const OverlayHeader = styled.div`
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

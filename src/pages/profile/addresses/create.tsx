@@ -1,6 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import api from "@services/api";
-import { Alert, Button, FormStyled, LoadingSpinner } from "@styles/components";
+import {
+  Alert,
+  Button,
+  FormStyled,
+  Input,
+  LoadingSpinner,
+} from "@styles/components";
 import normalizeChar from "@utils/normalizeChar";
 import stateOptions from "@utils/states";
 import { ValidationFormAddress } from "@utils/YupValidations";
@@ -10,7 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import Layout from "@components/Layout";
 import SideBarProfile from "@components/SideBarProfile";
 
-import Input from "@components/Input";
+import InputMask from "@components/InputMask";
 import Select from "react-select";
 import Switch from "@components/UI/Switch";
 import notification from "@utils/notification";
@@ -39,14 +45,9 @@ function CreateAddress() {
 
   const router = useRouter();
 
-  const {
-    register,
-    control,
-    errors,
-    handleSubmit,
-  } = useForm(/* {
+  const { register, control, errors, handleSubmit } = useForm({
     resolver: yupResolver(ValidationFormAddress),
-  } */);
+  });
 
   const onSubmit = async (data: ICreateAddress) => {
     setLoading(true);
@@ -78,12 +79,13 @@ function CreateAddress() {
             Apelido do endereço (ex: Minha casa) <span> *</span>
           </div>
         </label>
-        <input
+        <Input
           id="name"
           placeholder="Digite o apelido do endereço"
           name="name"
           type="text"
           ref={register}
+          error={errors.name}
         />
 
         {errors.name && <Alert>{errors.name.message}</Alert>}
@@ -94,7 +96,7 @@ function CreateAddress() {
           </div>
         </label>
 
-        <Input
+        <InputMask
           name="postcode"
           mask="99999-999"
           type="text"
@@ -102,6 +104,7 @@ function CreateAddress() {
           inputMode="numeric"
           id="postcode"
           placeholder="Digite o CEP"
+          error={errors.postcode}
         />
 
         {errors.postcode && <Alert>{errors.postcode.message}</Alert>}
@@ -112,12 +115,13 @@ function CreateAddress() {
           </div>
         </label>
 
-        <input
+        <Input
           name="address"
           id="address"
           placeholder="Rua, Avenida, etc..."
           type="text"
           ref={register}
+          error={errors.address}
         />
 
         {errors.address && <Alert>{errors.address.message}</Alert>}
@@ -128,12 +132,13 @@ function CreateAddress() {
           </div>
         </label>
 
-        <input
+        <Input
           name="city"
           id="city"
           placeholder="Digite o nome de sua cidade"
           type="text"
           ref={register}
+          error={errors.city}
         />
 
         {errors.city && <Alert>{errors.city.message}</Alert>}
@@ -161,12 +166,13 @@ function CreateAddress() {
             Bairro<span>*</span>
           </div>
         </label>
-        <input
+        <Input
           name="neighborhood"
           id="neighborhood"
           placeholder="Bairro"
           type="text"
           ref={register}
+          error={errors.neighborhood}
         />
 
         {errors.neighborhood && <Alert>{errors.neighborhood.message}</Alert>}
@@ -178,13 +184,14 @@ function CreateAddress() {
                 Número<span>*</span>
               </div>
             </label>
-            <input
+            <Input
               type="number"
               name="number"
               id="number"
               inputMode="numeric"
               placeholder="Digite o número"
               ref={register}
+              error={errors.number}
             />
 
             {errors.number && <Alert>{errors.number.message}</Alert>}
@@ -202,7 +209,7 @@ function CreateAddress() {
         <label htmlFor="complement">
           <div>Complemento</div>
         </label>
-        <input
+        <Input
           name="complement"
           id="complement"
           placeholder="Ap, bloco, casa etc..."
@@ -216,7 +223,7 @@ function CreateAddress() {
           </div>
         </label>
 
-        <Input
+        <InputMask
           mask={["(99) 9999-9999", "(99) 99999-9999"]}
           type="text"
           name="phone"
@@ -224,6 +231,7 @@ function CreateAddress() {
           ref={register}
           inputMode="numeric"
           placeholder="(19) 9999-9999"
+          error={errors.phone}
         />
 
         {errors.phone && <Alert>{errors.phone.message}</Alert>}

@@ -51,13 +51,9 @@ body, html, #__next{
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-body{
-  padding-top: 115px;
 
-  @media ${device.tablet}{
-    padding-top: 75px;
-  }
-}
+
+
 
 
 :root{
@@ -66,6 +62,7 @@ body{
   --secondary: #475F94;
   --green: #08dd5e;
   --light-green: #40cd28;
+  --black: #3e3e3e;
   --red: #ED2929;
   --f-blue: #3b5999;
   --link-hover-color: ${() => darken(0.15, "#FA4224")};
@@ -80,6 +77,7 @@ body{
 
 
 }
+
 
 .bg-primary{
   background: var(--primary);
@@ -113,5 +111,39 @@ right: 0;
 text-align: center;
   }
 
+
+  .carousel .control-prev.control-arrow {
+
+    &:before{
+      border-right: 8px solid #000;
+    }
+
+  }
+
+
+  .carousel .control-next.control-arrow {
+
+&:before{
+  border-left: 8px solid #000;
+}
+
+}
+
+  .thumb{
+    width: 55px !important;
+    border: 1px solid #ccc !important;
+    
+  }
+
+
+  li.thumb.selected{
+    border: 1px solid #000 !important;
+  }
+
+
+
+  .carousel .slide{
+    background: none;
+  }
 
 `;

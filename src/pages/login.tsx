@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   FormStyled,
+  Input,
   LoadingSpinner,
 } from "../styles/components";
 import { loginSchema } from "../utils/YupValidations";
@@ -15,6 +16,7 @@ import { useAuth } from "../contexts/authContext";
 
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface ILoginForm {
   email: string;
@@ -40,13 +42,9 @@ export default function Login() {
     setLoadingButton(false);
   }
 
-  const {
-    handleSubmit,
-    register,
-    errors,
-  } = useForm(/* {
+  const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(loginSchema),
-  } */);
+  });
 
   return (
     <>
@@ -66,12 +64,13 @@ export default function Login() {
                 <div> Seu email</div>
               </label>
 
-              <input
+              <Input
                 ref={register}
                 type="email"
                 id="email"
                 name="email"
                 placeholder="Digite seu email"
+                error={errors.email}
               />
 
               {errors.email && (
@@ -85,12 +84,13 @@ export default function Login() {
                 <div> Senha</div>
               </label>
 
-              <input
+              <Input
                 ref={register}
                 type="password"
                 id="password"
                 name="password"
                 placeholder="Digite sua senha"
+                error={errors.password}
               />
 
               {errors.password && (
@@ -128,7 +128,7 @@ export default function Login() {
                 </div>
                 <Button
                   bgColor="f-blue"
-                  className="w-full text-center justify-center"
+                  className="w-full text-center justify-center flex items-center"
                 >
                   <FacebookSquare />
                   Entrar com facebook
@@ -140,7 +140,10 @@ export default function Login() {
           <div className="my-3 text-center">
             <span className="color-grey"> Cliente novo na loja? </span>
             <strong>
-              <a className="sublimed color-blue">Cadastre-se aqui</a> <br />
+              <Link href="/register">
+                <a className="sublimed color-blue"> Cadastre-se aqui </a>
+              </Link>
+              <br />
             </strong>
           </div>
         </div>

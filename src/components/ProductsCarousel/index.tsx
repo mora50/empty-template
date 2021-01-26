@@ -73,7 +73,7 @@ var settingsSlider = {
 
 const ProductsCarousel: FC<IProducts> = ({ products }) => {
   return (
-    <S.SliderWrapper className="mb-10  container   m-auto">
+    <S.SliderWrapper className=" container m-auto">
       <Slider {...settingsSlider}>
         {products.map((product) => (
           <Link href={`/product/${product.son_url_key}`} key={product.id}>

@@ -18,9 +18,7 @@ export const DefaultAddress = styled.button<{ default: boolean }>`
 export const AddressBox = styled.div`
   background: #fff;
   padding: 1rem;
-  -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+
   border-radius: 10px;
 
   svg {

@@ -1,6 +1,5 @@
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import * as S from "../styles/pages/home";
 import ProductsCarousel from "../components/ProductsCarousel";
 import { GetStaticProps } from "next";
@@ -9,6 +8,7 @@ import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import { Container } from "@styles/components";
 import * as O from "@styles/pages/myorders/order";
+import Button from "@components/UI/Button";
 
 var settings = {
   dots: true,
@@ -50,7 +50,7 @@ export default function Home({ products }) {
         </Slider>
       </Container>
 
-      <Container>
+      <Container className="mb-5">
         {router.isFallback ? (
           "Carregando"
         ) : (

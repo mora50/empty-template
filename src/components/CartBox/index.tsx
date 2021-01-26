@@ -12,6 +12,9 @@ import { useUI } from "src/contexts/modalsContext";
 import { CartWrapper } from "./style";
 import api from "@services/api";
 
+import { ShoppingCartOutline } from "@styled-icons/evaicons-outline/ShoppingCartOutline";
+import { Container, LinkStyled } from "@styles/components";
+
 interface Props {
   open?: boolean;
   onClose: () => void;
@@ -23,6 +26,7 @@ interface Items {
   id: number;
   quantity: number;
   product: {
+    url_key: string;
     images: [
       {
         url: string;
@@ -32,7 +36,9 @@ interface Items {
 }
 
 interface ICart {
-  sellers: {
+  items: Items[];
+  formated_sub_total?: string;
+  sellers?: {
     id: number;
     items: Items[];
   }[];
@@ -41,7 +47,7 @@ interface ICart {
 const CartBox: FC<Props> = ({ open = false, onClose }) => {
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
-  const [cartItems, setItemsCart] = useState<Items[]>([]);
+  const [cart, setCart] = useState<ICart>({ items: [] });
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -67,11 +73,15 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
 
           let cart: ICart = response.data.data;
 
-          const items = Object.entries(cart.sellers)
-            .map(([key, value]) => value.items)
-            .flat();
+          if (cart) {
+            const items = Object.entries(cart.sellers)
+              .map(([key, value]) => value.items)
+              .flat();
 
-          setItemsCart(items);
+            cart.items = items;
+
+            setCart(cart);
+          }
         } finally {
           setLoading(false);
         }
@@ -99,59 +109,100 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
                     enter="transition ease-in-out duration-300 transform"
                     leave="transition ease-in-out duration-100 transform"
                   >
-                    <div className="container mx-auto px-4">
-                      <CartWrapper>
-                        {!isAuthenticated
-                          ? "Vc precisa estar autenticado"
-                          : cartItems.length && (
-                              <div>
-                                <div className="flex flex-wrap">
-                                  {cartItems.map((item) => (
-                                    <div
-                                      className="grid mb-2 items-center gap-3 grid-cols-12"
-                                      key={item.id}
-                                    >
-                                      <div className="col-span-4">
-                                        <Image
-                                          src={item.product.images[0].url}
-                                          alt={item.name}
-                                          width={100}
-                                          height={100}
-                                        />
-                                      </div>
-
-                                      <div className="col-span-8">
-                                        <div className="product-name">
-                                          {" "}
-                                          {item.name}
-                                        </div>
-
-                                        <div className="flex justify-between mt-4">
-                                          <div className="col-span-6 text-gray-500">
-                                            {" "}
-                                            Quantidade:
-                                            {item.quantity}
-                                          </div>
-
-                                          <div className="col-span-6">
-                                            {item.formated_price}
-                                          </div>
-                                        </div>
-                                      </div>
-                                      {/* <div className="grid grid-cols-12 gap-3 justify-between">
-                                        <div className="col-span-ful">
-                                          {item.name}
-                                        </div>
-
-                                    
-                                      </div> */}
-                                    </div>
-                                  ))}
-                                </div>
+                    <Container>
+                      <CartWrapper className={!isAuthenticated && "p-4"}>
+                        {!isAuthenticated ? (
+                          <div className="text-center font-bold py-5 flex justify-center items-center">
+                            <ShoppingCartOutline width={30} />
+                            <div className="ml-2">
+                              Faça login para ver o carrinho
+                            </div>
+                          </div>
+                        ) : !cart.items.length ? (
+                          <div className="text-center flex py-5 justify-center items-center">
+                            <ShoppingCartOutline width={30} />
+                            <div className="ml-1">Seu carrinho está vazio</div>
+                          </div>
+                        ) : (
+                          <div>
+                            <div className="px-4 pt-3 pb-2">
+                              <div className=" flex items-center text-md pb-1 ">
+                                Meu carrinho <ShoppingCartOutline width={20} />
                               </div>
-                            )}
+                              <ul
+                                className={`box divide-y flex flex-wrap ${
+                                  cart.items.length < 4 && "pr-0"
+                                }`}
+                              >
+                                {cart.items.map((item) => (
+                                  <li key={item.id}>
+                                    <Link
+                                      href={`/product/${item.product.url_key}`}
+                                    >
+                                      <a
+                                        className="grid pt-2 pb-1  items-center gap-3 grid-cols-12 "
+                                        onClick={onClose}
+                                      >
+                                        <div className="col-span-3 flex">
+                                          <Image
+                                            src={item.product.images[0].url}
+                                            alt={item.name}
+                                            width={100}
+                                            height={100}
+                                          />
+                                        </div>
+
+                                        <div className="col-span-9">
+                                          <div className="product-name">
+                                            {" "}
+                                            {item.name}
+                                          </div>
+
+                                          <div className="flex justify-between mt-1 text-sm">
+                                            <div className="col-span-6 text-xs text-gray-500">
+                                              {" "}
+                                              Quantidade: {item.quantity}
+                                            </div>
+
+                                            <div className="col-span-6">
+                                              {item.formated_price}
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {/* <div className="grid grid-cols-12 gap-3 justify-between">
+                                    <div className="col-span-ful">
+                                      {item.name}
+                                    </div>
+
+                                
+                                  </div> */}
+                                      </a>
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="bg-gray-200 text-right pt-2 px-4 rounded-b-xl  pb-4 border-t border-gray-300">
+                              <div className=" mb-4">
+                                <span className="text-gray-500">
+                                  {" "}
+                                  Total sem frete:
+                                </span>{" "}
+                                <b> {cart.formated_sub_total} </b>
+                              </div>
+                              <div>
+                                <Link prefetch passHref href="/cart">
+                                  <LinkStyled bgColor="light-green">
+                                    Ver carrinho
+                                  </LinkStyled>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </CartWrapper>
-                    </div>
+                    </Container>
                   </Transition.Child>
                 </section>
               </div>

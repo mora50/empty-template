@@ -70,8 +70,8 @@ export const ValidationUnloggedForm = Yup.object().shape({
     .required("Número do telefone é obrigatório"),
 
   vat_number: Yup.string()
-    .max(18, "Máximo 14 números")
-    .min(11, "Mínimo 11 números")
+    .max(19, "Máximo 14 números")
+    .min(14, "Mínimo 11 números")
     .matches(/^[0-9/.-]+$/, "Apenas números")
     .required("Número do documento é obrigatório")
     .typeError("Apenas números"),
@@ -95,8 +95,8 @@ export const updateProfileSchema = Yup.object().shape({
     .max(60, "Máximo 60 caracteres"),
   email: Yup.string().email("Email invalido!").required("Email é obrigatório!"),
   vat_number: Yup.string()
-    .max(18, "Máximo 14 números")
-    .min(11, "Mínimo 11 números")
+    .max(19, "Máximo 14 números")
+    .min(14, "Mínimo 11 números")
     .matches(/^[0-9/.-]+$/, "Apenas números")
     .required("Número do documento é obrigatório")
     .typeError("Apenas números"),
@@ -123,8 +123,8 @@ export const registerUserSchema = Yup.object().shape({
     .max(60, "Máximo 60 caracteres"),
   email: Yup.string().email("Email invalido!").required("Email é obrigatório!"),
   vat_number: Yup.string()
-    .max(18, "Máximo 14 números")
-    .min(11, "Mínimo 11 números")
+    .max(19, "Máximo 14 números")
+    .min(14, "Mínimo 11 números")
     .matches(/^[0-9/.-]+$/, "Apenas números")
     .required("Número do documento é obrigatório")
     .typeError("Apenas números"),
@@ -180,7 +180,7 @@ export const orderCheckout = Yup.object().shape({
 
   email: Yup.string().email("Email invalido!").required("Email é obrigatório!"),
   vat_number: Yup.string()
-    .max(18, "Máximo 14 números")
+    .max(19, "Máximo 14 números")
     .min(14, "Mínimo 11 números")
     .matches(/^[0-9/.-]+$/, "Apenas números")
     .required("Número do documento é obrigatório")
