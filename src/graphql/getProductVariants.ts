@@ -7,6 +7,7 @@ export const GET_PRODUCT_VARIANTS = gql`
       id
       product_id
       url_key
+
       images {
         path
         id

@@ -1,6 +1,5 @@
 import { darken } from "polished";
 import { createGlobalStyle } from "styled-components";
-import { device } from "./components";
 
 export default createGlobalStyle`
 
@@ -12,6 +11,29 @@ export default createGlobalStyle`
   outline: 0;
 }
 
+
+
+:root{
+  --gray: #484D55;
+  --primary: #2474FA;
+  --secondary: #475F94;
+  --green: #08dd5e;
+  --light-green: #40cd28;
+  --black: #3e3e3e;
+  --red: #ED2929;
+  --f-blue: #3b5999;
+  --link-hover-color: ${() => darken(0.15, "#2474FA")};
+
+
+  /*order status*/
+  --completed: #2D9B01;
+  --cancelled: #ED2929;
+  --pending_payment: #F5D500;
+  --pending: #F5D500;
+  --processing: #007bff;
+
+
+}
 
 button, a{
   outline: none !important;
@@ -44,9 +66,6 @@ body, html, #__next{
   height: 100%;
   width: 100%;
 
-  overflow-x: hidden;
-
-  color: #3e3e3e;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -54,29 +73,10 @@ body, html, #__next{
 
 
 
-
-
-:root{
-  --gray: #484D55;
-  --primary: #FA4224;
-  --secondary: #475F94;
-  --green: #08dd5e;
-  --light-green: #40cd28;
-  --black: #3e3e3e;
-  --red: #ED2929;
-  --f-blue: #3b5999;
-  --link-hover-color: ${() => darken(0.15, "#FA4224")};
-
-
-  /*order status*/
-  --completed: #2D9B01;
-  --cancelled: #ED2929;
-  --pending_payment: #F5D500;
-  --pending: #F5D500;
-  --processing: #007bff;
-
-
+.back-blur{
+  backdrop-filter: blur(2px);
 }
+
 
 
 .bg-primary{
@@ -145,5 +145,60 @@ text-align: center;
   .carousel .slide{
     background: none;
   }
+
+
+  .animated {
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+
+@keyframes fadeInDown {
+    0% {
+       opacity: 1;
+      transform: translateY(0);
+   }
+   100% {
+      height: 0;
+   
+      opacity: 0;
+      transform: translateY(-20px);
+   }
+} 
 
 `;

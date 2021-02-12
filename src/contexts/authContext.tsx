@@ -1,5 +1,12 @@
 import { useRouter } from "next/router";
-import { createContext, FC, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Cookies from "js-cookie";
 import api from "../services/api";
 import notification from "@utils/notification";
@@ -82,13 +89,16 @@ export const AuthProvider: FC = ({ children }) => {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ isAuthenticated: authenticated, login, logout }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      isAuthenticated: authenticated,
+      login,
+      logout,
+    }),
+    [authenticated, login, logout]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

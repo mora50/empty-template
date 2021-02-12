@@ -1,19 +1,19 @@
 import { useAuth } from "src/contexts/authContext";
 
 import { Transition } from "@headlessui/react";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useOverlay, useModal, OverlayContainer } from "@react-aria/overlays";
 import { useDialog } from "react-aria";
 import Link from "next/link";
 import Image from "next/image";
 import { FocusScope } from "@react-aria/focus";
 import BackdropModal from "../BackdropModal";
-import { useUI } from "src/contexts/modalsContext";
 import { CartWrapper } from "./style";
-import api from "@services/api";
 
 import { ShoppingCartOutline } from "@styled-icons/evaicons-outline/ShoppingCartOutline";
 import { Container, LinkStyled } from "@styles/components";
+import { useCart } from "src/contexts/cartContext";
+import CartBoxLoader from "@components/Loaders/CartBoxLoader";
 
 interface Props {
   open?: boolean;
@@ -46,8 +46,7 @@ interface ICart {
 
 const CartBox: FC<Props> = ({ open = false, onClose }) => {
   const { isAuthenticated } = useAuth();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [cart, setCart] = useState<ICart>({ items: [] });
+  const { cart, loading, handleCart } = useCart();
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -65,27 +64,7 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      (async function () {
-        setLoading(true);
-
-        try {
-          const response = await api.get("/customer/checkout/cart");
-
-          let cart: ICart = response.data.data;
-
-          if (cart) {
-            const items = Object.entries(cart.sellers)
-              .map(([key, value]) => value.items)
-              .flat();
-
-            cart.items = items;
-
-            setCart(cart);
-          }
-        } finally {
-          setLoading(false);
-        }
-      })();
+      handleCart();
     }
   }, [isAuthenticated]);
 
@@ -110,7 +89,7 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
                     leave="transition ease-in-out duration-100 transform"
                   >
                     <Container>
-                      <CartWrapper className={!isAuthenticated && "p-4"}>
+                      <CartWrapper className={!isAuthenticated ? "p-4" : ""}>
                         {!isAuthenticated ? (
                           <div className="text-center font-bold py-5 flex justify-center items-center">
                             <ShoppingCartOutline width={30} />
@@ -118,20 +97,26 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
                               Faça login para ver o carrinho
                             </div>
                           </div>
-                        ) : !cart.items.length ? (
+                        ) : loading ? (
+                          <div className="px-4 pt-3 pb-2">
+                            {Array.from(Array(3), (_, i) => (
+                              <CartBoxLoader key={i} />
+                            ))}
+                          </div>
+                        ) : !cart ? (
                           <div className="text-center flex py-5 justify-center items-center">
                             <ShoppingCartOutline width={30} />
                             <div className="ml-1">Seu carrinho está vazio</div>
                           </div>
                         ) : (
                           <div>
-                            <div className="px-4 pt-3 pb-2">
-                              <div className=" flex items-center text-md pb-1 ">
+                            <div className="px-4 pt-3 pb-2 animated fadeIn">
+                              <div className=" flex justify-center items-center text-md pb-1 ">
                                 Meu carrinho <ShoppingCartOutline width={20} />
                               </div>
                               <ul
-                                className={`box divide-y flex flex-wrap ${
-                                  cart.items.length < 4 && "pr-0"
+                                className={`box flex flex-wrap ${
+                                  cart.items_count < 4 && "pr-0"
                                 }`}
                               >
                                 {cart.items.map((item) => (
@@ -185,14 +170,14 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
 
                             <div className="bg-gray-200 text-right pt-2 px-4 rounded-b-xl  pb-4 border-t border-gray-300">
                               <div className=" mb-4">
-                                <span className="text-gray-500">
+                                <span className="text-gray-500 text-sm">
                                   {" "}
                                   Total sem frete:
                                 </span>{" "}
                                 <b> {cart.formated_sub_total} </b>
                               </div>
                               <div>
-                                <Link prefetch passHref href="/cart">
+                                <Link passHref href="/checkout/cart">
                                   <LinkStyled bgColor="light-green">
                                     Ver carrinho
                                   </LinkStyled>

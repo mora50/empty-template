@@ -4,7 +4,7 @@ import notification from "../utils/notification";
 import Cookies from "js-cookie";
 import Router from "next/router";
 
-const url = process.env.NEXT_PUBLIC_APP_PLATAZ_URL;
+const url = process.env.NEXT_PUBLIC_APP_PLATAZ_URL + "/api";
 
 const api = axios.create({
   baseURL: url,
@@ -17,16 +17,21 @@ api.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+      const errorMessage =
+        error.response.data.message ?? error.response.data.error;
+
+      console.log(errorMessage);
+
       switch (error.response.status) {
         case 400:
-          notification(error.response.data.message, "error");
+          notification(errorMessage, "error");
 
           break;
 
         case 401:
           Cookies.remove("token");
 
-          notification(error.response.data.error, "error");
+          notification(errorMessage, "error");
 
           const path = Router.pathname;
 
@@ -40,14 +45,14 @@ api.interceptors.response.use(
           break;
 
         case 408:
-          notification(error.response.data.message, "error");
+          notification(errorMessage, "error");
 
           /*     history.push("/"); */
 
           break;
 
         case 500:
-          notification(error.response.data.message, "error");
+          notification(errorMessage, "error");
 
           break;
 

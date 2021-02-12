@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 
-export default function notification(message: string, theme: string) {
+type THEME_TOAST = "error" | "success" | "info" | "warning" | "black";
+
+export default function notification(message: string, theme: THEME_TOAST) {
   const dismissAll = () => toast.dismiss();
 
   dismissAll();

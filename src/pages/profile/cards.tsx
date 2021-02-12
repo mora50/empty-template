@@ -79,7 +79,7 @@ export default function Cards() {
         ))}
       </div>
       <div className="text-center mt-5">
-        <Link prefetch passHref href="/profile/cards/create">
+        <Link passHref href="/profile/cards/create">
           <LinkStyled bgColor="primary">Adicionar cartão</LinkStyled>
         </Link>
       </div>

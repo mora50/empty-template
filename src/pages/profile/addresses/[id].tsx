@@ -270,7 +270,11 @@ function Address() {
           className="py-2 px-4 mt-5 mx-auto text-lg"
           type="submit"
         >
-          {loading ? <LoadingSpinner size={15} barSize={3} /> : <>atualizar</>}
+          {loading ? (
+            <LoadingSpinner color="primary" size={15} barSize={3} />
+          ) : (
+            <>atualizar</>
+          )}
         </Button>
       </FormStyled>
     </div>

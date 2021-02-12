@@ -1,25 +1,24 @@
 import Link from "next/link";
-import { FC } from "react";
 import Slider from "react-slick";
 import ProductBox from "../ProductBox";
 import * as S from "./styles";
 
-interface IProducts {
-  products: [
+export interface IProducts {
+  id: number;
+  name: string;
+  image: string;
+  price: string;
+  son_suggested_price: string;
+  son_url_key: string;
+  son_images: [
     {
-      id: number;
-      name: string;
-      image: string;
-      price: string;
-      son_suggested_price: string;
-      son_url_key: string;
-      son_images: [
-        {
-          url: string;
-        }
-      ];
+      url: string;
     }
   ];
+}
+
+interface Props {
+  products: IProducts[];
 }
 
 var settingsSlider = {
@@ -71,12 +70,16 @@ var settingsSlider = {
   ],
 };
 
-const ProductsCarousel: FC<IProducts> = ({ products }) => {
+const ProductsCarousel = ({ products }: Props) => {
   return (
     <S.SliderWrapper className=" container m-auto">
       <Slider {...settingsSlider}>
         {products.map((product) => (
-          <Link href={`/product/${product.son_url_key}`} key={product.id}>
+          <Link
+            scroll={true}
+            href={`/product/${product.son_url_key}`}
+            key={product.id}
+          >
             <a>
               <ProductBox
                 image={product.image ?? product.son_images[0].url}

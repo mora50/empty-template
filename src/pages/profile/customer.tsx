@@ -238,7 +238,7 @@ function Customer() {
           <div className="text-center">
             <Button bgColor="primary" className="py-2 px-4 mt-5" type="submit">
               {loading ? (
-                <LoadingSpinner size={15} barSize={3} />
+                <LoadingSpinner color="primary" size={15} barSize={3} />
               ) : (
                 <>atualizar</>
               )}

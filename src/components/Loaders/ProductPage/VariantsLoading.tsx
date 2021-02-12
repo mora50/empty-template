@@ -1,11 +1,7 @@
-import React from "react";
+import { FC } from "react";
 import ContentLoader from "react-content-loader";
 
-interface Props {
-  className?: string;
-}
-
-const VariantsLoading = (props: Props) => (
+const VariantsLoading: FC = (props) => (
   <>
     <ContentLoader
       speed={2}

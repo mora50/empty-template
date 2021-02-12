@@ -41,6 +41,8 @@ function ProductVariants({ parentId }: { parentId: string }) {
       <div className="mt-3  ">
         {loading ? (
           <VariantsLoading />
+        ) : error ? (
+          <div>Ocorreu um erro ao carregar as variantes do produto </div>
         ) : (
           data.variants.length > 1 && (
             <>

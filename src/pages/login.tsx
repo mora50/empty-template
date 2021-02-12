@@ -111,7 +111,12 @@ export default function Login() {
                   type="submit"
                 >
                   {loadingButton ? (
-                    <LoadingSpinner className="mx-auto" size={20} barSize={3} />
+                    <LoadingSpinner
+                      color="primary"
+                      className="mx-auto"
+                      size={20}
+                      barSize={3}
+                    />
                   ) : (
                     "Entrar"
                   )}

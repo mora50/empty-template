@@ -37,51 +37,6 @@ export const ValidationFormAddress = Yup.object().shape({
     .max(60, "Máximo 60 caracteres"),
 });
 
-export const ValidationUnloggedForm = Yup.object().shape({
-  address: Yup.string()
-    .required("Campo obrigatório")
-    .max(60, "Máximo 60 caracteres"),
-
-  number: Yup.string()
-    .max(8, "Máximo 8 caracteres")
-    .required("Número da residencia é obrigatório"),
-  city: Yup.string()
-    .required("Campo obrigatório")
-    .max(60, "Máximo 60 caracteres"),
-  neighborhood: Yup.string()
-    .required("Campo obrigatório")
-    .max(60, "Máximo 60 caracteres"),
-
-  state: Yup.object()
-    .shape({
-      label: Yup.string().required(),
-      value: Yup.string().required(),
-    })
-    .typeError("Campo obrigatório"),
-
-  postcode: Yup.string()
-    .max(9, "Máximo 8 números")
-    .matches(/^[0-9-]+$/, "Apenas números")
-    .required("Campo obrigatório")
-    .typeError("Apenas números"),
-  phone: Yup.string()
-    .max(20, "Máximo 20 números")
-    .min(10, "Mínimo 8 números")
-    .required("Número do telefone é obrigatório"),
-
-  vat_number: Yup.string()
-    .max(19, "Máximo 14 números")
-    .min(14, "Mínimo 11 números")
-    .matches(/^[0-9/.-]+$/, "Apenas números")
-    .required("Número do documento é obrigatório")
-    .typeError("Apenas números"),
-
-  name: Yup.string()
-    .required("Campo obrigatório")
-    .max(60, "Máximo 60 caracteres"),
-  email: Yup.string().email("Email invalido!").required("Email é obrigatório!"),
-});
-
 export const loginSchema = Yup.object().shape({
   email: Yup.string().email("Email invalido!").required("Email é obrigatório!"),
   password: Yup.string()

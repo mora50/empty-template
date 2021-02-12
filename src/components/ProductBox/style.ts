@@ -59,11 +59,11 @@ export const ImageWrapper = styled.div`
   justify-content: center;
   height: 152px;
 
-  img {
+  /*   img {
     max-width: 102px;
     max-height: 152px;
     display: block;
-  }
+  } */
 `;
 
 export const imagemWrapper = styled.div`

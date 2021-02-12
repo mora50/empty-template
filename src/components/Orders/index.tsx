@@ -50,7 +50,7 @@ const Orders: FC = () => {
 
   return !orders ? (
     <div className="flex justify-center mt-5">
-      <LoadingSpinner size={50} barSize={5} />
+      <LoadingSpinner color="primary" size={50} barSize={5} />
     </div>
   ) : (
     <>
@@ -108,7 +108,7 @@ const Orders: FC = () => {
           </div>
           <div className="flex justify-center mt-5">
             {loading ? (
-              <LoadingSpinner size={50} barSize={5} />
+              <LoadingSpinner color="primary" size={50} barSize={5} />
             ) : (
               nextPageOrders > 0 && (
                 <Button

@@ -8,7 +8,6 @@ import { ThemeProvider } from "styled-components";
 
 import { FC } from "react";
 import theme from "@styles/theme";
-import ProtectRoute, { AuthProvider } from "../contexts/authContext";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-credit-cards/es/styles-compiled.css";
@@ -17,7 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { ToastContainer } from "react-toastify";
 import client from "@services/apollo";
-import { LocationProvider } from "src/contexts/locationContext";
+import ContextsProvider from "src/contexts/context";
 
 const Noop: FC = ({ children }) => <>{children}</>;
 
@@ -26,23 +25,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const SideBarProfile = (Component as any).SideBarProfile || Noop;
 
+  const CheckoutLayout = (Component as any).CheckoutLayout || Noop;
+
   return (
     <>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <ToastContainer />
-          <AuthProvider>
-            <LocationProvider>
-              <ProtectRoute>
-                <Layout pageProps={pageProps}>
-                  <SideBarProfile>
-                    <Component {...pageProps} />
-                  </SideBarProfile>
-                </Layout>
-              </ProtectRoute>
-            </LocationProvider>
-          </AuthProvider>
+          <ContextsProvider>
+            <Layout>
+              <CheckoutLayout>
+                <SideBarProfile>
+                  <Component {...pageProps} />
+                </SideBarProfile>
+              </CheckoutLayout>
+            </Layout>
+          </ContextsProvider>
         </ThemeProvider>
       </ApolloProvider>
     </>

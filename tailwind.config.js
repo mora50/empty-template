@@ -1,3 +1,7 @@
+const colors = {
+  primary: "#2474FA",
+};
+
 module.exports = {
   important: true,
   future: {
@@ -15,6 +19,16 @@ module.exports = {
       boxShadow: {
         top: "0px -5px 15px 0px rgba(0,0,0,0.27)",
       },
+
+      textColor: (theme) => theme("colors"),
+      textColor: {
+        primary: colors.primary,
+      },
+
+      borderColor: (theme) => ({
+        ...theme("colors"),
+        primary: colors.primary,
+      }),
     },
   },
   variants: {},

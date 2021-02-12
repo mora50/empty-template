@@ -16,7 +16,7 @@ export const BackdropModal = ({ onClose }: Props) => {
         leaveTo="opacity-0"
       >
         <div
-          className="absolute inset-0 bg-black z-0 bg-opacity-50 transition-opacity"
+          className="absolute inset-0 bg-black z-0 back-blur bg-opacity-50 transition-opacity"
           // Close the sidebar when clicking on the backdrop
           onClick={onClose}
         />

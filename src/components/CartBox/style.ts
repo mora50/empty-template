@@ -12,7 +12,7 @@ export const CartWrapper = styled.div`
   .box {
     overflow-y: visible;
     overflow-x: hidden;
-    max-height: 13rem;
+    max-height: 220px;
     padding-right: 1rem;
 
     ::-webkit-scrollbar {

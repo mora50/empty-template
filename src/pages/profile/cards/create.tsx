@@ -2,9 +2,11 @@ import CreditCardForm from "@components/CreditCardForm";
 import Layout from "@components/Layout";
 import LoadingAllScreen from "@components/LoadingAllScreen";
 import SideBarProfile from "@components/SideBarProfile";
+import { yupResolver } from "@hookform/resolvers/yup";
 import api from "@services/api";
 import { FormStyled } from "@styles/components";
 import normalizeChar from "@utils/normalizeChar";
+import { creditCardSchema } from "@utils/YupValidations";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -22,15 +24,13 @@ export default function CreateCard() {
 
   const router = useRouter();
 
-  const methods = useForm(/* {
+  const methods = useForm({
     resolver: yupResolver(creditCardSchema),
-  } */);
+  });
 
   const saveCard = async (data: ICreditCard) => {
     data.date_expiration = data.date_expiration.replace("/", "");
     data.number = normalizeChar(data.number);
-
-    
 
     setLoading(true);
     try {

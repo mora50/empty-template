@@ -53,8 +53,6 @@ const Location: FC<Props> = ({ open = false, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(event.target[0].value);
-
     getLocationByCode(event.target[0].value);
   };
 
@@ -87,7 +85,7 @@ const Location: FC<Props> = ({ open = false, onClose }) => {
                     </S.Close>
                     <div>
                       {loading ? (
-                        <LoadingSpinner size={40} barSize={5} />
+                        <LoadingSpinner color="primary" size={40} barSize={5} />
                       ) : location ? (
                         <>
                           <div className="mb-2">

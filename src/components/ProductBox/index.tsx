@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FC } from "react";
 
 interface IProduct {
@@ -12,9 +13,7 @@ export const ProductBox: FC<IProduct> = ({ name, price, image }) => {
   return (
     <S.ProdutoWrapper>
       <S.ImageWrapper>
-        <picture>
-          <img src={image} alt={name} />
-        </picture>
+        <Image width={100} height={100} src={image} alt={name} />
       </S.ImageWrapper>
 
       <div>

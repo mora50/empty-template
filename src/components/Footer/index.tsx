@@ -13,8 +13,6 @@ function Footer() {
 
   const router = useRouter();
 
-  console.log(router);
-
   const isProductPage = router.pathname.includes("product");
 
   return (

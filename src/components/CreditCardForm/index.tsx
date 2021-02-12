@@ -1,6 +1,6 @@
 import CreditCard from "@components/CreditCard";
 import InputMask from "@components/InputMask";
-import { Alert, Button } from "@styles/components";
+import { Alert, Button, Input } from "@styles/components";
 import { ChangeEvent, useState } from "react";
 
 import { useFormContext } from "react-hook-form";
@@ -41,7 +41,7 @@ export default function CreditCardForm() {
               Nome como está no cartão<span>*</span>
             </div>
 
-            <input
+            <Input
               ref={register}
               type="text"
               id="name"
@@ -49,6 +49,7 @@ export default function CreditCardForm() {
               onFocus={handleInputFocus}
               placeholder="NOME (como impresso no cartão)"
               onChange={(e) => setName(e.target.value)}
+              error={errors.name}
             />
 
             {errors?.name && <Alert>{errors?.name.message}</Alert>}

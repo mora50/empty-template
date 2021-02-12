@@ -10,7 +10,7 @@ import notification from "@utils/notification";
 import LoadingAllScreen from "@components/LoadingAllScreen";
 import Link from "next/link";
 
-interface IAddresses {
+export interface IAddresses {
   id: number;
   address: string;
   name: string;
@@ -25,7 +25,7 @@ interface IAddresses {
 
 function Addresses(): JSX.Element {
   const [loading, setLoading] = useState<boolean>();
-
+  const [error, setError] = useState<boolean>();
   const [addresses, setAddresses] = useState<IAddresses[]>([]);
   const [updateList, setUpdateList] = useState<number>();
 
@@ -34,9 +34,11 @@ function Addresses(): JSX.Element {
       setLoading(true);
 
       try {
-        const { data: response } = await api.get("/customer/addresses");
+        const { data: response } = await api.get<{ data: IAddresses[] }>(
+          "/customer/addresses"
+        );
 
-        const addresses = response.data.map((address: IAddresses) => {
+        const addresses = response.data.map((address) => {
           const postcode = address.postcode;
 
           const formattedPostCode =
@@ -49,6 +51,8 @@ function Addresses(): JSX.Element {
         });
 
         setAddresses(addresses);
+      } catch {
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -92,6 +96,10 @@ function Addresses(): JSX.Element {
           <div className="text-center w-100 mt-3">
             <strong>Sem endereços cadastrados</strong>
           </div>
+        )}
+
+        {error && (
+          <div className="text-center">Erro ao carregar os endereços</div>
         )}
 
         <div className="grid md:gap-10 gap-y-10 grid-cols-12">

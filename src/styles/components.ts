@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface ILoadingSpinner {
   size: number;
   barSize: number;
+  color: string;
 }
 
 interface ICallActions {
@@ -46,10 +47,10 @@ export const Container = styled.div`
 `;
 
 export const LoadingSpinner = styled.div<ILoadingSpinner>`
-  border: ${(props) => props.barSize}px solid var(--primary);
+  border: ${(props) => props.barSize}px solid var(--${(props) => props.color});
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
-  border-top: ${(props) => props.barSize}px solid #ccc;
+  border-top: ${(props) => props.barSize}px solid #f9f9f9;
   border-radius: 50%;
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;

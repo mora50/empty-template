@@ -151,7 +151,7 @@ export default function Register() {
               type="submit"
             >
               {loading ? (
-                <LoadingSpinner size={15} barSize={3} />
+                <LoadingSpinner color="primary" size={15} barSize={3} />
               ) : (
                 <>Criar seu cadastro</>
               )}

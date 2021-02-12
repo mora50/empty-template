@@ -5,8 +5,8 @@ export const Variant = styled.div`
   transition: 0.3s;
 
   select {
-    width: 100%;
     background: none;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 0.5rem 5px;

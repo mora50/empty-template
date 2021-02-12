@@ -38,18 +38,6 @@ export const GET_PRODUCT = gql`
         id
         description
         product_id
-        url_key
-
-        attributes {
-          text_value
-          value
-
-          attribute {
-            code
-
-            admin_name
-          }
-        }
       }
     }
   }
