@@ -24,8 +24,7 @@ export const ValidationFormAddress = Yup.object().shape({
   postcode: Yup.string()
     .max(9, "Máximo 8 números")
     .matches(/^[0-9-]+$/, "Apenas números")
-    .required("Campo obrigatório")
-    .typeError("Apenas números"),
+    .required("Campo obrigatório"),
   phone: Yup.string()
     .max(20, "Máximo 20 números")
     .min(10, "Mínimo 8 números")

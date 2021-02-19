@@ -1,15 +1,28 @@
 import api from "@services/api";
 import notification from "@utils/notification";
-import { createContext, FC, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+import { IAddresses } from "src/pages/profile/addresses";
 
-interface ICart {
-  items: Items[];
+export interface ICart {
   formated_sub_total?: string;
+  formated_grand_total: string;
+  formated_shipping_total: string;
+  items: Items[];
   items_count: number;
+  shipping_address: IAddresses;
   sellers?: {
+    items: Items[];
     name: string;
     sellerId: number;
-    items: Items[];
   }[];
 }
 
@@ -44,13 +57,13 @@ type Qty = { qty: QtyType };
 interface State {
   loading: boolean;
   cart: ICart;
-  changeCartLoading: Boolean;
+  changeCartLoading: boolean;
   handleCart: () => Promise<void>;
   removeCart: () => Promise<void>;
   addItemCart: (item: IAddcart) => Promise<void>;
   clearCart: () => Promise<void>;
   removeItemCart: (id: number) => Promise<void>;
-
+  setCart: Dispatch<SetStateAction<ICart>>;
   updataQuantity: (qty: Qty) => Promise<void>;
 }
 
@@ -61,7 +74,20 @@ export const CartProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [changeCartLoading, setChangeCartLoading] = useState<boolean>();
 
-  const handleCart = async () => {
+  const organizeCart = (cart: ICart) => {
+    const sellers = Object.entries(cart.sellers);
+
+    cart.items = sellers.map(([key, value]) => value.items).flat();
+
+    cart.sellers = sellers.map(([key, value]) => ({
+      ...value,
+      sellerId: parseInt(key),
+    }));
+
+    return cart;
+  };
+
+  const handleCart = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -70,68 +96,73 @@ export const CartProvider: FC = ({ children }) => {
       let cart: ICart = response.data.data;
 
       if (cart) {
-        const sellers = Object.entries(cart.sellers);
-
-        cart.items = sellers.map(([key, value]) => value.items).flat();
-
-        cart.sellers = sellers.map(([key, value]) => ({
-          ...value,
-          sellerId: parseInt(key),
-        }));
+        cart = organizeCart(cart);
 
         setCart(cart);
       }
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const addItemCart = async (item: IAddcart) => {
-    const { productId, sellerId, offerId, quantity } = item;
+  const addItemCart = useCallback(
+    async (item: IAddcart) => {
+      const { productId, sellerId, offerId, quantity } = item;
 
-    const data = {
-      product: productId,
-      quantity: quantity,
-      seller_info: {
-        seller_id: sellerId,
-        offer: offerId,
-      },
-    };
+      const data = {
+        product: productId,
+        quantity: quantity,
+        seller_info: {
+          seller_id: sellerId,
+          offer: offerId,
+        },
+      };
 
-    setChangeCartLoading(true);
-    try {
-      await api.post("/customer/checkout/cart/add", data);
-      handleCart();
-      notification("Produto adicionado ao carrinho!", "success");
-    } catch (err) {
-    } finally {
-      setChangeCartLoading(false);
-    }
-  };
+      setChangeCartLoading(true);
+      try {
+        await api.post("/customer/checkout/cart/add", data);
+        handleCart();
+        notification("Produto adicionado ao carrinho!", "success");
+      } catch (err) {
+      } finally {
+        setChangeCartLoading(false);
+      }
+    },
+    [handleCart]
+  );
 
-  async function removeItemCart(id: number) {
-    setChangeCartLoading(true);
-    try {
-      await api.get(`/customer/checkout/cart/remove-item/${id}`);
-      handleCart();
-    } finally {
-      setChangeCartLoading(false);
-    }
-  }
+  const removeItemCart = useCallback(
+    async (id: number) => {
+      setLoading(true);
+      try {
+        await api.get(`/customer/checkout/cart/remove-item/${id}`);
+        handleCart();
+      } finally {
+        setLoading(false);
+      }
+    },
+    [handleCart]
+  );
 
-  async function updataQuantity(data: Qty) {
+  const updataQuantity = useCallback(async (data: Qty) => {
     setLoading(true);
     try {
-      await api.put(`/customer/checkout/cart/update`, data);
+      const response = await api.put(`/customer/checkout/cart/update`, data);
 
-      handleCart();
+      let cart: ICart = response.data.data;
+
+      if (cart) {
+        cart = organizeCart(cart);
+
+        setCart(cart);
+      }
     } catch (err) {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
-  async function clearCart() {
+  const clearCart = async () => {
     setLoading(true);
     try {
       await api.get(`/customer/checkout/cart/empty`);
@@ -140,18 +171,30 @@ export const CartProvider: FC = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }
-
-  const value = {
-    cart,
-    loading,
-    changeCartLoading,
-    addItemCart,
-    removeItemCart,
-    handleCart,
-    updataQuantity,
-    clearCart,
   };
+
+  const value = useMemo(
+    () => ({
+      cart,
+      loading,
+      changeCartLoading,
+      addItemCart,
+      removeItemCart,
+      handleCart,
+      updataQuantity,
+      clearCart,
+      setCart,
+    }),
+    [
+      cart,
+      loading,
+      changeCartLoading,
+      addItemCart,
+      removeItemCart,
+      handleCart,
+      updataQuantity,
+    ]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

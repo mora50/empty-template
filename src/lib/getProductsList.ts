@@ -31,13 +31,13 @@ export async function getProductsList() {
   };
 
   try {
-    let response = await api.post("/product/search", data, {
+    const response = await api.post("/product/search", data, {
       serverSide: true,
     } as ICustomAxiosRequestConfig);
 
     const reducedProductList: IProducts[] = response.data.hits.slice(0, 15);
 
-    const productsList = reducedProductList.map((product, index) => {
+    const productsList = reducedProductList.map((product) => {
       const price =
         product.son_offers &&
         product.son_offers.length &&
@@ -58,7 +58,7 @@ export async function getProductsList() {
 }
 
 export async function getProductsUrl() {
-  let productsList = await getProductsList();
+  const productsList = await getProductsList();
 
   return productsList.map(({ son_url_key }) => ({
     params: { slug: son_url_key },

@@ -12,6 +12,20 @@ export default createGlobalStyle`
 }
 
 
+input {
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+
 
 :root{
   --gray: #484D55;
@@ -65,16 +79,27 @@ button, a{
 body, html, #__next{
   height: 100%;
   width: 100%;
-
-
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  position: relative;
 }
 
 
 
+.fill{
+  
+  max-height: -webkit-fill-available;
 
-.back-blur{
-  backdrop-filter: blur(2px);
+}
+
+.h-fit{
+  height: fit-content;
+}
+
+
+.bg-backdrop {
+  backdrop-filter: blur(2px) opacity(1);
+  background: rgba(0,0,0,.5);
+
 }
 
 
@@ -185,20 +210,64 @@ text-align: center;
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
+  
 }
+
+
+.border-img{
+  border-image: linear-gradient(transparent, rgb(214, 214, 214) 90%) 1 100% / 1 / 0 stretch;
+}
+
+::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  border-radius: 10px;
+	width: 5px;
+  height: 5px;
+	background-color: #F5F5F5;
+}
+
+
+
+.t-height{
+transition: height, opacity 1s ease-in-out;
+}
+
+
+
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background: #888; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 
 
 @keyframes fadeInDown {
     0% {
        opacity: 1;
+       
       transform: translateY(0);
    }
    100% {
-      height: 0;
    
       opacity: 0;
+      height: 0;
       transform: translateY(-20px);
-   }
+    }
 } 
 
 `;

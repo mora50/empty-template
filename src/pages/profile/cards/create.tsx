@@ -4,14 +4,14 @@ import LoadingAllScreen from "@components/LoadingAllScreen";
 import SideBarProfile from "@components/SideBarProfile";
 import { yupResolver } from "@hookform/resolvers/yup";
 import api from "@services/api";
-import { FormStyled } from "@styles/components";
+import { Button, FormStyled } from "@styles/components";
 import normalizeChar from "@utils/normalizeChar";
 import { creditCardSchema } from "@utils/YupValidations";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-interface ICreditCard {
+export interface ICreditCard {
   cvc?: string;
   expiry?: string;
   name?: string;
@@ -49,6 +49,12 @@ export default function CreateCard() {
       <FormProvider {...methods}>
         <FormStyled onSubmit={methods.handleSubmit(saveCard)}>
           <CreditCardForm />
+
+          <div className="text-center mt-5">
+            <Button minHeight={35} bgColor="primary">
+              Adicionar
+            </Button>
+          </div>
         </FormStyled>
       </FormProvider>
     </>

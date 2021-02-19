@@ -103,7 +103,7 @@ export default function Slug({
   const { isFallback } = useRouter();
   /**Multable product data */
   const [productData, setProductData] = useState<IProduct>(product);
-  const { toggleLocationBar } = useUI();
+  const { openLocationBar } = useUI();
   const { location } = useLocation();
   const { addItemCart, changeCartLoading, handleCart } = useCart();
 
@@ -280,7 +280,7 @@ export default function Slug({
                 <div> Ofertas mais próximas de: </div>
 
                 <span
-                  onClick={toggleLocationBar}
+                  onClick={openLocationBar}
                   className="flex font-bold underline cursor-pointer"
                 >
                   <span className="truncate">

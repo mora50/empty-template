@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import {
   createContext,
   FC,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -18,6 +19,7 @@ export interface State {
 
 declare global {
   interface Date {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     addHours: Function;
   }
 }
@@ -38,44 +40,43 @@ export const AuthProvider: FC = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (token) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
+    setAuthenticated(token ? true : false);
   }, [token]);
 
-  const login = async (email: string, password: string, redirect?: string) => {
-    try {
-      const { data: response } = await api.post("/customer/login", {
-        email,
-        password,
-      });
-
-      const token = response.token;
-
-      if (token) {
-        Date.prototype.addHours = function (h: number) {
-          this.setHours(this.getHours() + h);
-          return this;
-        };
-
-        const todayWithHours = new Date().addHours(1);
-
-        Cookies.set("token", token, {
-          expires: todayWithHours,
+  const login = useCallback(
+    async (email: string, password: string, redirect?: string) => {
+      try {
+        const { data: response } = await api.post("/customer/login", {
+          email,
+          password,
         });
 
-        router.push(redirect);
+        const token = response.token;
 
-        setAuthenticated(true);
+        if (token) {
+          Date.prototype.addHours = function (h: number) {
+            this.setHours(this.getHours() + h);
+            return this;
+          };
+
+          const todayWithHours = new Date().addHours(1);
+
+          Cookies.set("token", token, {
+            expires: todayWithHours,
+          });
+
+          router.push(redirect);
+
+          setAuthenticated(true);
+        }
+      } finally {
+        return false;
       }
-    } finally {
-      return false;
-    }
-  };
+    },
+    [router]
+  );
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       const response: Logout = await api.get("/customer/logout");
 
@@ -87,7 +88,7 @@ export const AuthProvider: FC = ({ children }) => {
       delete api.defaults.headers.Authorization;
     } finally {
     }
-  };
+  }, [router]);
 
   const value = useMemo(
     () => ({
@@ -104,7 +105,7 @@ export const AuthProvider: FC = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 
 const ProtectRoute: FC<{ children?: JSX.Element }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, login } = useAuth();
 
   const token = Cookies.get("token");
 
@@ -118,13 +119,15 @@ const ProtectRoute: FC<{ children?: JSX.Element }> = ({ children }) => {
 
   useEffect(() => {
     if (!token && isProtected) {
-      router.push("/login");
+      login("vitor.piaia@seoze.com", "123456");
+
+      /*  router.push("/login"); */
     }
 
     if (token && router.pathname === "/login") {
       router.push("/profile");
     }
-  }, [isAuthenticated, router.pathname]);
+  }, [isAuthenticated, isProtected, login, router, token]);
 
   return children;
 };

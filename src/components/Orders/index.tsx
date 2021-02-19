@@ -45,7 +45,6 @@ const Orders: FC = () => {
 
   useEffect(() => {
     loadMoreOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return !orders ? (

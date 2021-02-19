@@ -13,7 +13,7 @@ import notification from "@utils/notification";
 import { useRouter } from "next/router";
 import AddressForm from "@components/AddressForm";
 
-interface ICreateAddress {
+export interface ICreateAddress {
   address: string;
   city: string;
   complement: string;

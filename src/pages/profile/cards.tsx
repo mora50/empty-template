@@ -21,14 +21,12 @@ export default function Cards() {
   const loadCards = async () => {
     setLoading(true);
 
-    setTimeout(async () => {
-      try {
-        const { data: response } = await api.get("/customer/cards");
-        setCards(response.data);
-      } finally {
-        setLoading(false);
-      }
-    }, 3000);
+    try {
+      const { data: response } = await api.get("/customer/cards");
+      setCards(response.data);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

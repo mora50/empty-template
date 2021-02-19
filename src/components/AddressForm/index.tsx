@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import InputMask from "@components/InputMask";
 import Switch from "@components/UI/Switch";
 import { Alert, Input } from "@styles/components";
@@ -6,7 +6,6 @@ import stateOptions from "@utils/states";
 
 import { Controller, useFormContext } from "react-hook-form";
 import Select from "react-select";
-import api from "@services/api";
 /* import { getLocationByCode } from "@lib/getLocationByCode"; */
 
 const AddressForm: FC = () => {
@@ -40,73 +39,85 @@ const AddressForm: FC = () => {
 
   return (
     <>
-      <label htmlFor="name">
-        <div>
-          Apelido do endereço (ex: Minha casa) <span> *</span>
+      <div className="grid grid-cols-12 gap-4 items-center">
+        <div className="col-span-6">
+          <label htmlFor="name">
+            <div>
+              Apelido do endereço <span> *</span>
+            </div>
+          </label>
+          <Input
+            id="name"
+            placeholder="ex: Minha casa"
+            name="name"
+            type="text"
+            ref={register}
+            error={errors.name}
+          />
+
+          {errors.name && <Alert>{errors.name.message}</Alert>}
         </div>
-      </label>
-      <Input
-        id="name"
-        placeholder="Digite o apelido do endereço"
-        name="name"
-        type="text"
-        ref={register}
-        error={errors.name}
-      />
 
-      {errors.name && <Alert>{errors.name.message}</Alert>}
+        <div className="col-span-6">
+          <label htmlFor="postcode">
+            <div>
+              CEP para envio<span>*</span>
+            </div>
+          </label>
 
-      <label htmlFor="postcode">
-        <div>
-          CEP para envio<span>*</span>
+          <InputMask
+            name="postcode"
+            mask="99999-999"
+            type="text"
+            ref={register}
+            inputMode="numeric"
+            id="postcode"
+            placeholder="Digite o CEP"
+            error={errors.postcode}
+          />
+          {errors.postcode && <Alert>{errors.postcode.message}</Alert>}
         </div>
-      </label>
+      </div>
 
-      <InputMask
-        name="postcode"
-        mask="99999-999"
-        type="text"
-        ref={register}
-        inputMode="numeric"
-        id="postcode"
-        placeholder="Digite o CEP"
-        error={errors.postcode}
-      />
-      {errors.postcode && <Alert>{errors.postcode.message}</Alert>}
+      <div className="grid grid-cols-12 gap-4 items-center">
+        <div className="col-span-6">
+          <label htmlFor="address">
+            <div>
+              Logadouro<span>*</span>
+            </div>
+          </label>
 
-      <label htmlFor="address">
-        <div>
-          Logadouro<span>*</span>
+          <Input
+            name="address"
+            id="address"
+            placeholder="Rua, Avenida, etc..."
+            type="text"
+            ref={register}
+            error={errors.address}
+          />
+
+          {errors.address && <Alert>{errors.address.message}</Alert>}
         </div>
-      </label>
 
-      <Input
-        name="address"
-        id="address"
-        placeholder="Rua, Avenida, etc..."
-        type="text"
-        ref={register}
-        error={errors.address}
-      />
+        <div className="col-span-6">
+          <label htmlFor="city">
+            <div>
+              Cidade<span>*</span>
+            </div>
+          </label>
 
-      {errors.address && <Alert>{errors.address.message}</Alert>}
+          <Input
+            name="city"
+            id="city"
+            placeholder="Digite o nome de sua cidade"
+            type="text"
+            ref={register}
+            error={errors.city}
+          />
 
-      <label htmlFor="city">
-        <div>
-          Cidade<span>*</span>
+          {errors.city && <Alert>{errors.city.message}</Alert>}
         </div>
-      </label>
-
-      <Input
-        name="city"
-        id="city"
-        placeholder="Digite o nome de sua cidade"
-        type="text"
-        ref={register}
-        error={errors.city}
-      />
-
-      {errors.city && <Alert>{errors.city.message}</Alert>}
+      </div>
 
       <div className="no-shadow my-2">
         <label htmlFor="">
@@ -126,6 +137,7 @@ const AddressForm: FC = () => {
             />
           }
           options={stateOptions}
+          defaultValue={null}
           name="state"
           isClearable
           placeholder={"Selecione seu estado"}

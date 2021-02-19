@@ -9,7 +9,7 @@ export const ProgressCircle = styled.span<{ progress?: number }>`
     text-align: center;
     font-weight: bold;
     color: var(--gray);
-    font-size: 12px;
+    font-size: 11px;
 
     svg {
       width: 30px;
@@ -34,11 +34,11 @@ export const ProgressCircle = styled.span<{ progress?: number }>`
 
   @media ${device.tablet} {
     .content {
-      font-size: 16px;
+      font-size: 14px;
 
       svg {
-        width: 40px;
-        max-height: 40px;
+        width: 30px;
+        max-height: 30px;
         color: var(--primary);
       }
     }

@@ -10,7 +10,7 @@ export const Elements = styled.div`
   }
 
   @media ${device.laptop} {
-    max-width: 500px;
+    max-width: 28rem;
     margin: 0 auto;
     height: 85.8%;
   }

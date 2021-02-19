@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { useCart } from "src/contexts/cartContext";
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
 import { Minus } from "@styled-icons/boxicons-regular/Minus";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingAllScreen from "@components/LoadingAllScreen";
 import useDebounce from "@hooks/useDebounce";
 import CheckoutLayout from "@components/CheckoutLayout";
 import { Button } from "@styles/components";
+import cn from "classnames";
 
 interface IQuantity {
   sku: string;
@@ -73,8 +74,7 @@ export default function Cart() {
             <div key={seller.sellerId} className="lg:pb-4 animated ease-out">
               <div className="text-sm  pt-4 text-gray-500">
                 <h3>
-                  Vendido por:{" "}
-                  <span className="font-bold font-">{seller.name}</span>
+                  Vendido por: <span className="font-bold">{seller.name}</span>
                 </h3>
               </div>
 
@@ -82,11 +82,9 @@ export default function Cart() {
                 {seller.items.map((item) => (
                   <div
                     key={item.id}
-                    className={
-                      deleteEffect === item.id
-                        ? "fadeInDown animated ease-out "
-                        : ""
-                    }
+                    className={cn("", {
+                      "fadeInDown animated ease-out ": deleteEffect === item.id,
+                    })}
                   >
                     <div className="grid relative   items-center grid-cols-12  gap-x-4 lg:my-2 mt-7 mb-5 bg-white p-3   rounded-md">
                       <div className="lg:col-span-5 col-span-full flex items-center mb-4 lg:mb-0">
@@ -107,11 +105,9 @@ export default function Cart() {
                           target="_new"
                         >
                           {item.name} <br />
-                          <div className="table table-fixed w-full">
-                            <div className="truncate table-cell text-gray-500">
-                              <small>Cód do produto: {item.sku}</small>
-                            </div>
-                          </div>
+                          <span className="truncate table-cell text-gray-500">
+                            <small>Cód do produto: {item.sku}</small>
+                          </span>
                         </a>
                       </div>
 

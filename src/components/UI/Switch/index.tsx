@@ -23,9 +23,19 @@ const Switch = forwardRef<HTMLInputElement, ISwitch>((props, ref) => {
 
   return (
     <S.Wrapper>
-      <input ref={ref} name={name} id={name} type="checkbox" checked={active} />
+      <input
+        ref={ref}
+        name={name}
+        id={name}
+        type="checkbox"
+        defaultChecked={active !== undefined ? active : false}
+      />
 
-      <S.Box htmlFor={name} onClick={() => setActive(!active)} active={active}>
+      <S.Box
+        htmlFor={name}
+        onClick={() => setActive(!active)}
+        active={active !== undefined ? active : false}
+      >
         <div className="mr-5"> </div>
         <span className="ml-5">{labelText}</span>
       </S.Box>

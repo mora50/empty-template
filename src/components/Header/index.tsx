@@ -20,7 +20,7 @@ const Header: FC = () => {
   const {
     displayLocationBar,
     closeLocationBar,
-    toggleLocationBar,
+    openLocationBar,
     displaySideBar,
     closeSideBar,
     openSideBar,
@@ -69,7 +69,7 @@ const Header: FC = () => {
             </div>
 
             <S.IconsWrapper className="col-span-6 text-right items-center flex justify-around md:col-span-3 md:order-last">
-              <S.MapIcon active={false} onClick={toggleLocationBar}>
+              <S.MapIcon active={false} onClick={openLocationBar}>
                 <Map />
               </S.MapIcon>
 

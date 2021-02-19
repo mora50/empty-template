@@ -2,9 +2,9 @@ import React, { FC, useMemo, createContext, useReducer } from "react";
 import { SSRProvider, OverlayProvider } from "react-aria";
 
 export interface State {
-  displayLocationBar: Boolean;
-  displaySideBar: Boolean;
-  displayAccessDropdown: Boolean;
+  displayLocationBar: boolean;
+  displaySideBar: boolean;
+  displayAccessDropdown: boolean;
 }
 
 const initialState = {
@@ -121,11 +121,6 @@ export const UIProvider: FC = (props) => {
   const setModalView = (view: MODAL_VIEWS) =>
     dispatch({ type: "SET_DROPDOWN_AUTH_VIEW", view });
 
-  const toggleLocationBar = () =>
-    state.displayLocationBar
-      ? dispatch({ type: "CLOSE_LOCATION_BAR" })
-      : dispatch({ type: "OPEN_LOCATION_BAR" });
-
   const value = useMemo(
     () => ({
       ...state,
@@ -136,7 +131,6 @@ export const UIProvider: FC = (props) => {
       closeLocationBar,
       openAccessDropdown,
       closeAccessDropdown,
-      toggleLocationBar,
       openCartBar,
       closeCartBar,
     }),

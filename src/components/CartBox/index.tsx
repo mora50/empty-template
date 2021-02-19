@@ -9,6 +9,7 @@ import Image from "next/image";
 import { FocusScope } from "@react-aria/focus";
 import BackdropModal from "../BackdropModal";
 import { CartWrapper } from "./style";
+import cn from "classnames";
 
 import { ShoppingCartOutline } from "@styled-icons/evaicons-outline/ShoppingCartOutline";
 import { Container, LinkStyled } from "@styles/components";
@@ -18,30 +19,6 @@ import CartBoxLoader from "@components/Loaders/CartBoxLoader";
 interface Props {
   open?: boolean;
   onClose: () => void;
-}
-
-interface Items {
-  name: string;
-  formated_price: string;
-  id: number;
-  quantity: number;
-  product: {
-    url_key: string;
-    images: [
-      {
-        url: string;
-      }
-    ];
-  };
-}
-
-interface ICart {
-  items: Items[];
-  formated_sub_total?: string;
-  sellers?: {
-    id: number;
-    items: Items[];
-  }[];
 }
 
 const CartBox: FC<Props> = ({ open = false, onClose }) => {
@@ -66,7 +43,7 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
     if (isAuthenticated) {
       handleCart();
     }
-  }, [isAuthenticated]);
+  }, [handleCart, isAuthenticated]);
 
   return (
     <>
@@ -115,9 +92,9 @@ const CartBox: FC<Props> = ({ open = false, onClose }) => {
                                 Meu carrinho <ShoppingCartOutline width={20} />
                               </div>
                               <ul
-                                className={`box flex flex-wrap ${
-                                  cart.items_count < 4 && "pr-0"
-                                }`}
+                                className={cn("box flex flex-wrap", {
+                                  "pr-0": cart.items_count < 4,
+                                })}
                               >
                                 {cart.items.map((item) => (
                                   <li key={item.id}>

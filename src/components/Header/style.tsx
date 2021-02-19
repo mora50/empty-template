@@ -42,7 +42,7 @@ export const MenuWrapper = styled.header`
   -webkit-box-shadow: 0px 1px 21px 1px rgba(0, 0, 0, 0.03);
   -moz-box-shadow: 0px 1px 21px 1px rgba(192, 150, 150, 0.03);
   box-shadow: 0px 1px 21px 1px rgba(0, 0, 0, 0.03);
-  z-index: 50;
+  z-index: 35;
   position: relative;
   overflow: hidden;
 

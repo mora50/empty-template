@@ -4,7 +4,6 @@ import { useOverlay, useModal, OverlayContainer } from "@react-aria/overlays";
 import { useDialog } from "react-aria";
 
 import { FocusScope } from "@react-aria/focus";
-import { Container } from "../../styles/components";
 import BackdropModal from "../BackdropModal";
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
 

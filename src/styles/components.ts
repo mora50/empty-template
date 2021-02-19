@@ -128,12 +128,14 @@ export const FormStyled = styled.form<{ disabled?: boolean }>`
     }
   }
 
-  label div {
-    margin-top: 1rem;
-
-    margin-bottom: 10px;
-    span {
-      color: var(--red);
+  label {
+    font-size: 14px;
+    div {
+      margin-top: 1rem;
+      margin-bottom: 10px;
+      span {
+        color: var(--red);
+      }
     }
   }
 
@@ -148,9 +150,8 @@ export const FormStyled = styled.form<{ disabled?: boolean }>`
 export const Alert = styled.div`
   border-radius: 7px;
   color: red;
+  font-size: 13px;
 `;
-
-export const arrowLeftCarousel = styled.div``;
 
 export const Button = styled.button<ICallActions>`
   border-radius: 10px;
@@ -169,30 +170,30 @@ export const Button = styled.button<ICallActions>`
     margin-right: 7px;
   }
 
-  ${(props) =>
-    props.flexCenter &&
+  ${({ flexCenter }) =>
+    flexCenter &&
     css`
       display: flex;
       align-items: center;
       justify-content: center;
     `};
 
-  ${(props) =>
-    props.minHeight &&
+  ${({ minHeight }) =>
+    minHeight &&
     css`
-      min-height: ${props.minHeight}px;
+      min-height: ${minHeight}px;
     `};
 
-  ${(props) =>
-    props.fontSize &&
+  ${({ fontSize }) =>
+    fontSize &&
     css`
-      font-size: ${props.fontSize}px;
+      font-size: ${fontSize}px;
     `};
 
-  ${(props) =>
-    props.bgColor &&
+  ${({ bgColor }) =>
+    bgColor &&
     css`
-      background: var(--${props.bgColor});
+      background: var(--${bgColor});
     `};
 `;
 

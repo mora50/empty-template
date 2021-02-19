@@ -11,6 +11,7 @@ import { ButtonMenu, ListItems } from "./styles";
 import { useAuth } from "../../contexts/authContext";
 import ActiveLink from "@components/ActiveLink";
 import { Container } from "@styles/components";
+import cn from "classnames";
 
 const SideBarProfile: FC<{ children?: JSX.Element }> = ({ children }) => {
   const { logout } = useAuth();
@@ -19,17 +20,22 @@ const SideBarProfile: FC<{ children?: JSX.Element }> = ({ children }) => {
   return (
     <>
       <div
-        className={`${
-          show ? "block" : "hidden"
-        } fixed bg-black bg-opacity-50 w-full h-screen top-0`}
+        className={cn(
+          "fixed bg-black bg-opacity-50 w-full z-40 h-screen top-0",
+          {
+            block: show,
+            hidden: !show,
+          }
+        )}
         onClick={() => setShow(false)}
       ></div>
       <Container>
-        <div className="grid grid-cols-12">
+        <div className="grid grid-cols-12  ">
           <ListItems
-            className={`col-span-3 lg:col-span-2 md:block ${
-              show ? "block" : "hidden"
-            }`}
+            className={cn("col-span-3 lg:col-span-2 z-50 md:block", {
+              block: show,
+              hidden: !show,
+            })}
           >
             <div className="md:text-2xl text-xl mb-3 color-blue">
               Minha conta
@@ -90,7 +96,7 @@ const SideBarProfile: FC<{ children?: JSX.Element }> = ({ children }) => {
             </ul>
           </ListItems>
 
-          <ButtonMenu onClick={() => (show ? setShow(false) : setShow(true))}>
+          <ButtonMenu className="z-50" onClick={() => setShow(!show)}>
             <div />
             <div />
             <div />
